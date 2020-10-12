@@ -56,10 +56,10 @@ export default {
 /* flex-wrap: wrap; */
 /* justify-content: center; */
 /* } */
-.stories-thumbs {
-  // margin: 15px;
-  /* height: 200px; */
-}
+// .stories-thumbs {
+//   margin: 15px;
+//   height: 200px;
+// }
 .story-container > img {
   height: 400px;
 }
