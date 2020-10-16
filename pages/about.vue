@@ -229,7 +229,8 @@ textarea {
 }
 
 .submit-btn {
-  float: right;
+  // float: right;
+  margin-top: 3px;
   padding: 7px 35px;
   border-radius: 4px;
   /* display: inline-block; */
@@ -237,7 +238,7 @@ textarea {
   color: rgb(24, 24, 24);
   font-size: 18px;
   font-weight: 700;
-  cursor: pointer;
+  // cursor: pointer;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.06), 0 2px 10px 0 rgba(0, 0, 0, 0.07);
   /* -webkit-transition: all 300ms ease; */
   /* transition: all 300ms ease; */
