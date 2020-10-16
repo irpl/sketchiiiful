@@ -10,6 +10,12 @@
 
       <div class="story-boards">
         <div class="story-focus">
+          <div class="board-nav board-back" @click="() => boardNav(37)">
+            &lt;
+          </div>
+          <div class="board-nav board-forward" @click="() => boardNav(39)">
+            &gt;
+          </div>
           <img
             ref="focused"
             class="lazyload lazy-blur"
@@ -72,6 +78,22 @@ export default {
     lload() {
       this.$refs.focused.classList.remove("lazyloaded");
       this.$refs.focused.classList.add("lazyload");
+    },
+    boardNav(dir) {
+      switch (dir) {
+        case 39:
+          this.boardIndex =
+            this.boardIndex == this.boardLen - 1 ? 0 : this.boardIndex + 1;
+          break;
+
+        case 37:
+          this.boardIndex =
+            this.boardIndex == 0 ? this.boardLen - 1 : this.boardIndex - 1;
+          break;
+        default:
+          break;
+      }
+      this.lload();
     }
   },
   computed: {
@@ -83,24 +105,7 @@ export default {
     // lazySizesConfig.preloadAfterLoad = true;
   },
   async mounted() {
-    window.addEventListener("keydown", e => {
-      switch (e.keyCode) {
-        case 39:
-          this.boardIndex =
-            this.boardIndex == this.boardLen - 1 ? 0 : this.boardIndex + 1;
-          this.lload();
-          break;
-
-        case 37:
-          this.boardIndex =
-            this.boardIndex == 0 ? this.boardLen - 1 : this.boardIndex - 1;
-          this.lload();
-          break;
-
-        default:
-          break;
-      }
-    });
+    window.addEventListener("keydown", e => this.boardNav(e.keyCode));
     try {
       this.story = await this.$strapi.findOne("boards", this.$route.params.id);
       this.boardLen = await this.story.boards.length;
@@ -118,8 +123,11 @@ export default {
   justify-content: space-evenly;
 }
 .story-focus {
+  // -webkit-transition: 2s ease-in-out;
+  // transition: 2s ease-in-out;
   // height: 600px;
   // width: 600px;
+  position: relative;
   display: flex;
   flex-wrap: wrap;
   > img {
@@ -174,6 +182,7 @@ export default {
   width: 0;
   background-color: rgb(253, 198, 137);
   transition: width 0.2s ease-in-out;
+  z-index: 1;
 }
 .story-boards {
   width: 40%;
@@ -197,5 +206,39 @@ export default {
 }
 .the-idea-body p {
   font-size: 1.2em;
+}
+.board-nav {
+  cursor: pointer;
+  width: 80px;
+  height: 100%;
+  opacity: 0;
+  color: rgb(253, 198, 137);
+  font-size: 48px;
+  font-weight: 700;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  z-index: 1;
+  transition: opacity 0.3s ease-in-out;
+}
+.board-back {
+  background-image: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.6),
+    rgba(0, 0, 0, 0)
+  );
+}
+.board-forward {
+  right: 0;
+  background-image: linear-gradient(
+    to left,
+    rgba(0, 0, 0, 0.6),
+    rgba(0, 0, 0, 0)
+  );
+}
+.story-focus:hover .board-nav {
+  opacity: 1;
 }
 </style>
