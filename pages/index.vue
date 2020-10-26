@@ -1,26 +1,13 @@
 <template>
-  <section class="container">
-    <div class="stories-container">
-      <div class="stories-thumbs" v-for="story in stories" :key="story.id">
-        <nuxt-link :to="'story/' + story.id">
-          <img
-            :src="
-              baseUrl +
-                story.boards[parseInt(story.thumb) - 1 || 0].formats.medium.url
-            "
-            alt=""
-          />
-          <div class="overlay">
-            <span>{{ story.title }}</span>
-          </div>
-        </nuxt-link>
-      </div>
-    </div>
-  </section>
+  <grid :collection="stories" api="story" />
 </template>
 
 <script>
+import Grid from "~/components/Grid.vue";
 export default {
+  components: {
+    Grid
+  },
   data() {
     return {
       baseUrl: this.$strapi.$http._defaults.prefixUrl,
@@ -35,7 +22,7 @@ export default {
     // console.log(process.env.baseUrl);
     // console.log(this.$strapi.$http._defaults.prefixUrl);
     try {
-      this.stories = await this.$strapi.find("boards");
+      this.stories = await this.$strapi.$stories.find();
     } catch (error) {
       console.error(error);
     }
@@ -43,7 +30,8 @@ export default {
       $(".stories-container").justifiedGallery({
         rowHeight: 250,
         lastRow: "nojustify",
-        margins: 20
+        margins: 20,
+        cssAnimation: false
       });
     });
   }
@@ -51,17 +39,8 @@ export default {
 </script>
 
 <style lang="scss">
-/* .stories-container { */
-/* display: flex; */
-/* flex-wrap: wrap; */
-/* justify-content: center; */
-/* } */
-// .stories-thumbs {
-//   margin: 15px;
-//   height: 200px;
-// }
 .story-container > img {
-  height: 400px;
+  // height: 400px;
 }
 .overlay {
   display: flex;

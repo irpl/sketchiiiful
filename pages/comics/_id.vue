@@ -5,15 +5,15 @@
         <img
           ref="focused"
           class="lazyload lazy-blur"
-          :data-src="baseUrl + comic.comic[comicIndex].url"
-          :src="baseUrl + comic.comic[comicIndex].formats.thumbnail.url"
+          :data-src="baseUrl + comic.images[comicIndex].url"
+          :src="baseUrl + comic.images[comicIndex].formats.thumbnail.url"
           alt=""
         />
       </div>
       <div v-if="comicLen > 1" class="comic-thumbs">
         <div
           class="comic-thumb"
-          v-for="(comic, index) in comic.comic"
+          v-for="(comic, index) in comic.images"
           :key="index"
         >
           <img
@@ -33,6 +33,10 @@
 import "lazysizes";
 
 export default {
+  validate({ params }) {
+    // Must be a number
+    return /^\d+$/.test(params.id);
+  },
   data() {
     return {
       baseUrl: this.$strapi.$http._defaults.prefixUrl,
@@ -72,8 +76,8 @@ export default {
       }
     });
     try {
-      this.comic = await this.$strapi.findOne("comics", this.$route.params.id);
-      this.comicLen = await this.comic.comic.length;
+      this.comic = await this.$strapi.$comics.findOne(this.$route.params.id);
+      this.comicLen = await this.comic.images.length;
     } catch (error) {
       console.error(error);
     }

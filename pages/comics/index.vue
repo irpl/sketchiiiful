@@ -1,37 +1,29 @@
 <template>
-  <section class="container">
-    <div class="stories-container">
-      <div class="stories-thumbs" v-for="comic in comics" :key="comic.id">
-        <nuxt-link :to="'comics/' + comic.id">
-          <img
-            :src="
-              baseUrl +
-                comic.comic[parseInt(comic.thumb) - 1 || 0].formats.medium.url
-            "
-            alt=""
-          />
-          <div class="overlay">
-            <span>{{ comic.title }}</span>
-          </div>
-        </nuxt-link>
-      </div>
-    </div>
-  </section>
+  <grid :collection="comics" api="comics" />
 </template>
 
 <script>
+import Grid from "~/components/Grid.vue";
 export default {
+  components: {
+    Grid
+  },
   data() {
     return {
       baseUrl: this.$strapi.$http._defaults.prefixUrl,
       comics: []
     };
   },
+  // computed: {
+  //   comics() {
+
+  //   }
+  // },
   async mounted() {
     // console.log(process.env.baseUrl);
     // console.log(this.$strapi.$http._defaults.prefixUrl);
     try {
-      this.comics = await this.$strapi.find("comics");
+      this.comics = await this.$strapi.$comics.find();
     } catch (error) {
       console.error(error);
     }
@@ -39,7 +31,8 @@ export default {
       $(".stories-container").justifiedGallery({
         rowHeight: 350,
         lastRow: "nojustify",
-        margins: 20
+        margins: 20,
+        cssAnimation: false
       });
     });
   }

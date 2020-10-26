@@ -88,19 +88,23 @@ export default {
 /* .about-container > div { */
 /* margin: 0 40px; */
 /* } */
-.about-image {
-  /* max-width: 90%; */
-}
+// .about-image {
+//   /* max-width: 90%; */
+// }
 .about-form {
   width: 650px;
 }
-.about-image > img {
-  height: 700px;
-  /* max-width: 90%; */
+.about-image {
+  // width: 550px;
+  // height: 700px;
+  > img {
+    height: 700px;
+    /* max-width: 90%; */
+  }
 }
 .about-body {
   vertical-align: middle;
-  width: 500px;
+  width: 650px;
 }
 h1 {
   font-family: "Poppins", sans-serif, "arial";
@@ -134,6 +138,9 @@ h4 {
   }
   .about-container {
     margin: 0 5%;
+    > div {
+      margin-bottom: 60px;
+    }
     /* width: 95%; */
   }
 }
@@ -176,7 +183,7 @@ textarea:valid ~ label {
 
 .styled-input label {
   color: #999;
-  padding: 1.3rem 30px 1rem 30px;
+  padding: 1.1rem 0px 1rem 30px;
   position: absolute;
   top: 10px;
   left: 0;

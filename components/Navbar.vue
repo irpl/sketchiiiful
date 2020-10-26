@@ -9,33 +9,34 @@
         </div>
       </nuxt-link>
       <div class="navs">
-        <nuxt-link to="/"
-          ><div
-            class="nav-btn"
-            :class="{ 'nav-active': currentRoute === 'index' }"
-          >
+        <div
+          class="nav-btn"
+          :class="{ 'nav-active': currentRoute === 'index' }"
+        >
+          <nuxt-link to="/">
             Home
-          </div></nuxt-link
+          </nuxt-link>
+        </div>
+
+        <div
+          class="nav-btn"
+          :class="{
+            'nav-active':
+              currentRoute === 'comics' || currentRoute === 'comics-id'
+          }"
         >
-        <nuxt-link to="/comics"
-          ><div
-            class="nav-btn"
-            :class="{
-              'nav-active':
-                currentRoute === 'comics' || currentRoute === 'comics-id'
-            }"
-          >
+          <nuxt-link to="/comics">
             Comics & Illustrations
-          </div></nuxt-link
+          </nuxt-link>
+        </div>
+        <div
+          class="nav-btn"
+          :class="{ 'nav-active': currentRoute === 'about' }"
         >
-        <nuxt-link to="/about"
-          ><div
-            class="nav-btn"
-            :class="{ 'nav-active': currentRoute === 'about' }"
-          >
+          <nuxt-link to="/about">
             About
-          </div>
-        </nuxt-link>
+          </nuxt-link>
+        </div>
       </div>
     </div>
   </header>
@@ -78,26 +79,31 @@ a {
 }
 .nav-btn {
   height: 80%;
-  margin-left: 1.5rem;
-  padding: 0 1rem;
+  margin: 0 1.5rem;
+  padding: 0.5em;
   text-align: center;
-  color: whitesmoke;
+  > a {
+    color: whitesmoke;
+  }
 }
 @media only screen and (max-width: 768px) {
   .nav-btn {
-    margin-left: unset;
+    // margin-left: unset;
+    padding: 0.5em;
   }
   .navs {
-    margin-top: 12px;
+    padding-top: 12px;
   }
 }
 .nav-active {
   background-color: whitesmoke;
   border-radius: 4px;
-  color: black;
+  > a {
+    color: black;
+  }
   /* text-decoration: underline; */
   /* font-weight: 700; */
-  padding: 0.5em;
+  // padding: 0.5em;
 }
 .nav-title {
   display: block;

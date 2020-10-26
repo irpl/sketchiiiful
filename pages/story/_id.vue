@@ -3,7 +3,7 @@
     <div class="story-container">
       <div class="the-idea">
         <div class="the-idea-image">
-          <img :src="baseUrl + '/uploads/The_Idea_bd2f4bbfc5.png'" alt="" />
+          <img src="/image/The_Idea.png" alt="" />
         </div>
         <div class="the-idea-body" v-html="mark(story.idea)"></div>
       </div>
@@ -19,8 +19,8 @@
           <img
             ref="focused"
             class="lazyload lazy-blur"
-            :data-src="baseUrl + story.boards[boardIndex].url"
-            :src="baseUrl + story.boards[boardIndex].formats.thumbnail.url"
+            :data-src="baseUrl + story.images[boardIndex].url"
+            :src="baseUrl + story.images[boardIndex].formats.thumbnail.url"
             alt=""
           />
 
@@ -30,7 +30,7 @@
         <div class="story-thumbs">
           <div
             class="story-thumb"
-            v-for="(thumb, index) in story.boards"
+            v-for="(thumb, index) in story.images"
             :key="index"
           >
             <img
@@ -107,8 +107,8 @@ export default {
   async mounted() {
     window.addEventListener("keydown", e => this.boardNav(e.keyCode));
     try {
-      this.story = await this.$strapi.findOne("boards", this.$route.params.id);
-      this.boardLen = await this.story.boards.length;
+      this.story = await this.$strapi.$stories.findOne(this.$route.params.id);
+      this.boardLen = await this.story.images.length;
     } catch (error) {
       console.error(error);
     }
@@ -204,7 +204,7 @@ export default {
 .the-idea-body h1 {
   font-size: 48px;
 }
-.the-idea-body p {
+p {
   font-size: 1.2em;
 }
 .board-nav {
