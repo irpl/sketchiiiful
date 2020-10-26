@@ -51,7 +51,7 @@ export default {
    */
   modules: ["@nuxtjs/strapi"],
   strapi: {
-    entities: ["boards", "about"],
+    entities: ["stories", "comics", "about"],
     url: process.env.API_BASE_URL
   },
 
