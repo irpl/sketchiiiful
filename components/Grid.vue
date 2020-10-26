@@ -1,22 +1,17 @@
 <template>
   <section class="container">
     <div class="stories-container">
-      <div
-        class="stories-thumbs"
-        v-for="collection in collection"
-        :key="collection.id"
-      >
-        <nuxt-link :to="api + '/' + collection.id">
+      <div class="stories-thumbs" v-for="c in collection" :key="c.id">
+        <nuxt-link :to="api + '/' + c.id">
           <img
             :src="
               baseUrl +
-                collection.images[parseInt(collection.thumb) - 1 || 0].formats
-                  .medium.url
+                c.images[parseInt(collection.thumb) - 1 || 0].formats.medium.url
             "
             alt=""
           />
           <div class="overlay">
-            <span>{{ collection.title }}</span>
+            <span>{{ c.title }}</span>
           </div>
         </nuxt-link>
       </div>
@@ -31,9 +26,9 @@ export default {
     return {
       baseUrl: this.$strapi.$http._defaults.prefixUrl
     };
-  },
-  created() {
-    console.log(this.$props.api);
   }
+  // created() {
+  //   console.log(this.$props.collection);
+  // }
 };
 </script>
