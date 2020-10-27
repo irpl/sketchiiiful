@@ -32,3 +32,26 @@ export default {
   // }
 };
 </script>
+<style lang="scss">
+.overlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: whitesmoke;
+  font-size: 2rem;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: 0.2s ease;
+  background-color: rgba(0, 0, 0, 0.5);
+  &:hover {
+    opacity: 1;
+  }
+}
+</style>
