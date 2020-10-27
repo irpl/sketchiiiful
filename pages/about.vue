@@ -9,46 +9,47 @@
           alt=""
         />
       </div>
+
       <div class="about-body" v-html="mark(about.body)"></div>
-      <div class="about-form">
-        <div>
-          <h1>Contact Me</h1>
+    </div>
+    <div class="about-form">
+      <div>
+        <h1>Contact Me</h1>
+      </div>
+      <div>
+        <h4 style="text-align:center">Tell me something cool!</h4>
+      </div>
+      <div class="input-container">
+        <!-- <div> -->
+        <div class="styled-input wide">
+          <input type="text" required />
+          <label>Name</label>
+          <!-- </div> -->
         </div>
-        <div>
-          <h4 style="text-align:center">Tell me something cool!</h4>
-        </div>
-        <div class="input-container">
-          <!-- <div> -->
-          <div class="styled-input wide">
+        <div class="short-row">
+          <div class="styled-input">
             <input type="text" required />
-            <label>Name</label>
-            <!-- </div> -->
+            <label>Email</label>
           </div>
-          <div class="short-row">
-            <div class="styled-input">
-              <input type="text" required />
-              <label>Email</label>
-            </div>
-            <!-- </div>
+          <!-- </div>
           <div> -->
-            <div class="styled-input">
-              <input type="text" required />
-              <label>Phone Number</label>
-            </div>
+          <div class="styled-input">
+            <input type="text" required />
+            <label>Phone Number</label>
           </div>
-          <div>
-            <div class="styled-input wide">
-              <textarea required></textarea>
-              <label>Message</label>
-            </div>
+        </div>
+        <div>
+          <div class="styled-input wide">
+            <textarea required></textarea>
+            <label>Message</label>
           </div>
-          <div>
-            <input
-              type="submit"
-              class="btn-lrg submit-btn"
-              value="Send Message"
-            />
-          </div>
+        </div>
+        <div>
+          <input
+            type="submit"
+            class="btn-lrg submit-btn"
+            value="Send Message"
+          />
         </div>
       </div>
     </div>
@@ -72,7 +73,11 @@ export default {
     }
   },
   async mounted() {
-    this.about = await this.$strapi.find("about");
+    try {
+      this.about = await this.$strapi.find("about");
+    } catch (err) {
+      console.log(err);
+    }
   }
 };
 </script>
@@ -127,6 +132,7 @@ h4 {
   }
   .about-form {
     width: 100%;
+    margin: 0 auto;
   }
   .about-image {
     // height: unset;
