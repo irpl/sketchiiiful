@@ -11,10 +11,12 @@
       <div class="story-boards">
         <div class="story-focus">
           <div class="board-nav board-back" @click="() => boardNav(37)">
-            &lt;
+            <!-- &lt; -->
+            <i class="fas fa-chevron-left"></i>
           </div>
           <div class="board-nav board-forward" @click="() => boardNav(39)">
-            &gt;
+            <!-- &gt; -->
+            <i class="fas fa-chevron-right"></i>
           </div>
           <img
             ref="focused"

@@ -27,7 +27,11 @@ export default {
         src: "/js/jquery-3.5.1.min.js",
         type: "text/javascript"
       },
-      { src: "/js/jquery.justifiedGallery.min.js", type: "text/javascript" }
+      { src: "/js/jquery.justifiedGallery.min.js", type: "text/javascript" },
+      {
+        src: "https://kit.fontawesome.com/f0f1d79673.js",
+        crossorigin: "anonymous"
+      }
     ]
   },
 
