@@ -98,6 +98,7 @@ export default {
 // }
 .about-form {
   width: 650px;
+  margin: 0 auto;
 }
 .about-image {
   // width: 550px;
@@ -132,7 +133,6 @@ h4 {
   }
   .about-form {
     width: 100%;
-    margin: 0 auto;
   }
   .about-image {
     // height: unset;
