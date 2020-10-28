@@ -9,11 +9,18 @@ export default {
    ** Headers of the page
    */
   head: {
-    title: pkg.name,
+    // title: pkg.name,
+    title: "SRhoden Portfolio",
     meta: [
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { hid: "description", name: "description", content: pkg.description }
+      {
+        hid: "description",
+        name: "description",
+        // content: pkg.description
+        content:
+          "As a visual storyteller with a background in sequential art, Sean Rhoden's pre-production storyboards lay the groundwork to make it easier for any production crew to deliver captivating creative content. Check out the portfolio."
+      }
     ],
     link: [
       { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
