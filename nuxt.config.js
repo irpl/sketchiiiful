@@ -74,5 +74,17 @@ export default {
      ** You can extend webpack config here
      */
     extend(config, ctx) {}
+  },
+  buildMoules: ["@nuxtjs/netlify-files"],
+  netlifyFiles: {
+    netlifyToml: {
+      redirects: [
+        {
+          from: "/*",
+          to: "/index.html",
+          status: 200
+        }
+      ]
+    }
   }
 };
