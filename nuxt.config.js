@@ -75,7 +75,7 @@ export default {
      */
     extend(config, ctx) {}
   },
-  buildMoules: ["@nuxtjs/netlify-files"],
+  buildModules: ["@nuxtjs/netlify-files"],
   netlifyFiles: {
     netlifyToml: {
       redirects: [
