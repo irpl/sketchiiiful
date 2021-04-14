@@ -60,12 +60,7 @@ export default {
   /*
    ** Nuxt.js modules
    */
-  modules: ["@nuxtjs/strapi"],
-  strapi: {
-    entities: ["stories", "comics", "about"],
-    url: process.env.API_BASE_URL
-  },
-
+  modules: [],
   /*
    ** Build configuration
    */
@@ -75,7 +70,16 @@ export default {
      */
     extend(config, ctx) {}
   },
-  buildModules: ["@nuxtjs/netlify-files"],
+  buildModules: ["@nuxtjs/netlify-files", "@nuxtjs/sanity"],
+  privateRuntimeConfig: {
+    sanity: {
+      token: process.env.SANITY_TOKEN
+    }
+  },
+  sanity: {
+    projectId: "fc1vy7pz",
+    dataset: "production"
+  },
   netlifyFiles: {
     netlifyToml: {
       redirects: [
@@ -86,5 +90,6 @@ export default {
         }
       ]
     }
-  }
+  },
+  components: true
 };

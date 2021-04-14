@@ -5,45 +5,54 @@
         <div class="the-idea-image">
           <img src="/image/The_Idea.png" alt="" />
         </div>
-        <div class="the-idea-body" v-html="mark(story.idea)"></div>
+        <div class="the-idea-body">
+          <SanityContent :blocks="story.idea" />
+        </div>
       </div>
 
       <div class="story-boards">
         <div class="story-focus">
           <div class="board-nav board-back" @click="() => boardNav(37)">
-            <!-- &lt; -->
             <i class="fas fa-chevron-left"></i>
           </div>
           <div class="board-nav board-forward" @click="() => boardNav(39)">
-            <!-- &gt; -->
             <i class="fas fa-chevron-right"></i>
           </div>
-          <img
+          <SanityImage
+            class="text"
             ref="focused"
-            class="lazyload lazy-blur"
-            :data-src="baseUrl + story.images[boardIndex].url"
-            :src="baseUrl + story.images[boardIndex].formats.thumbnail.url"
-            alt=""
+            :asset-id="story.imagesGallery[boardIndex].asset._ref"
+            auto="format"
           />
-
-          <div class="story-progress" :style="'width:' + progress + '%'"></div>
+          <SanityContent :blocks="story.imagesGallery[boardIndex].caption" />
+          <!-- <span class="text">
+            Lorem Ipsum is simply dummy text of the printing and typesetting
+            industry. Lorem Ipsum has been the industry's standard dummy text
+            ever since the 1500s, when an unknown printer took a galley of type
+            and scrambled it to make a type specimen book. It has survived not
+            only five centuries, but also the leap into electronic typesetting,
+            remaining essentially unchanged. It was popularised in the 1960s
+            with the release of Letraset sheets containing Lorem Ipsum passages,
+            and more recently with desktop publishing software like Aldus
+            PageMaker including versions of Lorem Ipsum.
+          </span> -->
         </div>
+        <div class="story-progress" :style="'width:' + progress + '%'"></div>
 
         <div class="story-thumbs">
           <div
             class="story-thumb"
-            v-for="(thumb, index) in story.images"
+            v-for="(thumb, index) in story.imagesGallery"
             :key="index"
           >
-            <img
-              v-if="thumb.mime.split('/')[0] == 'image'"
+            <SanityImage
+              :asset-id="thumb.asset._ref"
+              auto="format"
               :class="{
                 'story-thumb-focused': index == boardIndex
               }"
               :id="index"
               @click="focus"
-              :src="baseUrl + thumb.formats.thumbnail.url"
-              alt=""
             />
           </div>
         </div>
@@ -53,34 +62,36 @@
 </template>
 
 <script>
-import marked from "marked";
-import "lazysizes";
+import { groq } from "@nuxtjs/sanity";
+// import SanityContent from "@nuxtjs/sanity";
+// import marked from "marked";
+// import "lazysizes";
 
 export default {
-  validate({ params }) {
-    // Must be a number
-    return /^\d+$/.test(params.id);
-  },
+  // validate({ params }) {
+  //   // Must be a number
+  //   return /^\d+$/.test(params.id);
+  // },
   data() {
     return {
-      baseUrl: this.$strapi.$http._defaults.prefixUrl,
+      // baseUrl: this.$strapi.$http._defaults.prefixUrl,
       story: null,
       boardLen: 0,
       boardIndex: 0
     };
   },
   methods: {
-    mark(md) {
-      return md ? marked(md) : "";
-    },
+    // mark(md) {
+    //   return md ? marked(md) : "";
+    // },
     focus(e) {
       this.boardIndex = e.target.id;
-      this.lload();
+      // this.lload();
     },
-    lload() {
-      this.$refs.focused.classList.remove("lazyloaded");
-      this.$refs.focused.classList.add("lazyload");
-    },
+    // lload() {
+    //   this.$refs.focused.classList.remove("lazyloaded");
+    //   this.$refs.focused.classList.add("lazyload");
+    // },
     boardNav(dir) {
       switch (dir) {
         case 39:
@@ -95,7 +106,7 @@ export default {
         default:
           break;
       }
-      this.lload();
+      // this.lload();
     }
   },
   computed: {
@@ -104,13 +115,16 @@ export default {
     }
   },
   created() {
-    // lazySizesConfig.preloadAfterLoad = true;
+    //// lazySizesConfig.preloadAfterLoad = true;
+    // console.log(this.$route.params.id);
   },
   async mounted() {
     window.addEventListener("keydown", e => this.boardNav(e.keyCode));
     try {
-      this.story = await this.$strapi.$stories.findOne(this.$route.params.id);
-      this.boardLen = await this.story.images.length;
+      this.story = await this.$sanity.fetch(
+        groq`*[_type == "story" && slug.current == "${this.$route.params.id}"][0]`
+      );
+      this.boardLen = await this.story.imagesGallery.length;
     } catch (error) {
       console.error(error);
     }
@@ -119,6 +133,13 @@ export default {
 </script>
 
 <style lang="scss">
+.text {
+  // position: absolute;
+  // top: 0;
+  // left: 0;
+  // bottom: 0;
+  // right: 0;
+}
 .story-container {
   display: flex;
   flex-wrap: wrap;
@@ -129,11 +150,13 @@ export default {
   // transition: 2s ease-in-out;
   // height: 600px;
   // width: 600px;
+  // padding-bottom: 100%;
   position: relative;
   display: flex;
   flex-wrap: wrap;
   > img {
     // height: 100%;
+    margin: auto;
     width: 100%;
   }
 }
@@ -154,18 +177,25 @@ export default {
 }
 .story-thumbs {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
 
   // flex: 1;
   flex-wrap: wrap;
   // height: 400px;
   width: 100%;
   // flex-basis: 400px;
+
+  // &:after {
+  //   content: "";
+  //   flex: auto;
+  // }
 }
 .story-thumb {
   // background-color: grey;
   // max-height: 100px;
   // max-width: 100px;
-  margin: 5px;
+  margin: 5px 5px 0 0;
   // flex-shrink: 2;
   flex-shrink: 1;
   flex-basis: 8%;

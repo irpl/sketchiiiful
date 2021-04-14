@@ -19,28 +19,28 @@
       <div>
         <h4 style="text-align:center">Tell me something cool!</h4>
       </div>
-      <div class="input-container">
+      <form class="input-container" @submit.prevent="submitMessage">
         <!-- <div> -->
         <div class="styled-input wide">
-          <input type="text" required />
+          <input type="text" required v-model="message.name" />
           <label>Name</label>
           <!-- </div> -->
         </div>
         <div class="short-row">
           <div class="styled-input">
-            <input type="text" required />
+            <input type="text" required v-model="message.email" />
             <label>Email</label>
           </div>
           <!-- </div>
           <div> -->
           <div class="styled-input">
-            <input type="text" required />
+            <input type="text" required v-model="message.numbuer" />
             <label>Phone Number</label>
           </div>
         </div>
         <div>
           <div class="styled-input wide">
-            <textarea required></textarea>
+            <textarea required v-model="message.msg"></textarea>
             <label>Message</label>
           </div>
         </div>
@@ -51,7 +51,7 @@
             value="Send Message"
           />
         </div>
-      </div>
+      </form>
     </div>
   </div>
 </template>
@@ -64,12 +64,16 @@ export default {
   data() {
     return {
       baseUrl: this.$strapi.$http._defaults.prefixUrl,
-      about: null
+      about: null,
+      message: {}
     };
   },
   methods: {
     mark(md) {
       return marked(md);
+    },
+    submitMessage() {
+      console.log(this.message);
     }
   },
   async mounted() {

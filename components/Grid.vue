@@ -1,14 +1,11 @@
 <template>
   <section class="container">
     <div class="stories-container">
-      <div class="stories-thumbs" v-for="c in collection" :key="c.id">
-        <nuxt-link :to="api + '/' + c.id">
-          <img
-            :src="
-              baseUrl +
-                c.images[parseInt(collection.thumb) - 1 || 0].formats.medium.url
-            "
-            alt=""
+      <div class="stories-thumbs" v-for="c in collection" :key="c._id">
+        <nuxt-link :to="api + '/' + c.slug.current">
+          <SanityImage
+            :asset-id="c.imagesGallery[1 - c.thumb].asset._ref"
+            auto="format"
           />
           <div class="overlay">
             <span>{{ c.title }}</span>
@@ -20,16 +17,19 @@
 </template>
 
 <script>
+import { SanityContent } from "@nuxtjs/sanity/dist/sanity-content";
+
 export default {
   props: ["collection", "api"],
   data() {
     return {
-      baseUrl: this.$strapi.$http._defaults.prefixUrl
+      // collection: this.collection
     };
+  },
+  created() {
+    // this.collection = this.$props.collection;
+    console.log(this.$props.collection);
   }
-  // created() {
-  //   console.log(this.$props.collection);
-  // }
 };
 </script>
 <style lang="scss">
